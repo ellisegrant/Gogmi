@@ -7,7 +7,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        // GOGMI Brand Colors
         'royal-blue': '#003366',
         'ocean-blue': '#0066CC',
         'gold': '#DAA520',
