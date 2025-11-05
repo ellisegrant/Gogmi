@@ -102,49 +102,51 @@ const Projects = () => {
   });
 
   return (
-    <div className="w-full pt-20">
-      <section className="relative py-24 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 overflow-hidden">
+    <div className="w-full overflow-x-hidden">
+      {/* Hero Section */}
+      <section className="relative pt-40 pb-24 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
             backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%)'
           }}></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
-          <div className="inline-flex items-center space-x-2 bg-yellow-500/20 backdrop-blur-sm px-6 py-3 rounded-full border border-yellow-500/30 mb-6">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center relative z-10">
+          <div className="inline-flex items-center space-x-2 bg-yellow-500/20 backdrop-blur-sm px-6 py-3 rounded-full border border-yellow-500/30 mb-8">
             <Award className="w-5 h-5 text-yellow-300" />
-            <span className="text-yellow-200 font-semibold text-sm">Transforming Maritime Landscapes</span>
+            <span className="text-yellow-200 font-semibold text-sm uppercase tracking-wide">Transforming Maritime Landscapes</span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Our Projects</h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto">
+          <h1 className="text-5xl sm:text-6xl font-bold text-white mb-6 tracking-tight">Our Projects</h1>
+          <p className="text-xl sm:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
             Driving real change through innovative maritime initiatives across West Africa
           </p>
         </div>
       </section>
 
-      <section className="py-12 bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="relative w-full md:w-96">
+      {/* Search and Filter Section */}
+      <section className="py-8 bg-white border-b border-gray-200 sticky top-20 z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+            <div className="relative w-full lg:w-96">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search projects..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center lg:justify-end">
               {filters.map((filter) => (
                 <button
                   key={filter}
                   onClick={() => setSelectedFilter(filter)}
-                  className={`px-5 py-2 rounded-lg font-medium transition-all ${
+                  className={`px-5 py-2.5 rounded-lg font-medium transition-all whitespace-nowrap ${
                     selectedFilter === filter
-                      ? 'bg-blue-900 text-white shadow-lg'
+                      ? 'bg-blue-900 text-white shadow-lg scale-105'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -156,11 +158,25 @@ const Projects = () => {
         </div>
       </section>
 
+      {/* Projects Grid */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="mb-8">
+            <p className="text-gray-600 text-lg">
+              Showing <span className="font-bold text-blue-900">{filteredProjects.length}</span> {filteredProjects.length === 1 ? 'project' : 'projects'}
+              {selectedFilter !== 'all' && <span> in <span className="font-bold text-blue-900">{selectedFilter}</span></span>}
+            </p>
+          </div>
+
           {filteredProjects.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-2xl text-gray-500">No projects found matching your criteria</p>
+              <button 
+                onClick={() => { setSearchTerm(''); setSelectedFilter('all'); }}
+                className="mt-6 px-6 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-all"
+              >
+                Clear Filters
+              </button>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -169,7 +185,8 @@ const Projects = () => {
                   key={project.id}
                   className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div className="relative h-56 overflow-hidden">
+                  {/* Project Image */}
+                  <div className="relative h-64 overflow-hidden">
                     <img 
                       src={project.image} 
                       alt={project.title}
@@ -177,8 +194,9 @@ const Projects = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                     
+                    {/* Status Badge */}
                     <div className="absolute top-4 right-4">
-                      <span className={`px-4 py-1.5 rounded-full text-sm font-bold ${
+                      <span className={`px-4 py-2 rounded-full text-xs font-bold shadow-lg ${
                         project.status === 'Ongoing' 
                           ? 'bg-yellow-500 text-gray-900' 
                           : 'bg-green-500 text-white'
@@ -187,46 +205,51 @@ const Projects = () => {
                       </span>
                     </div>
 
+                    {/* Category Badge */}
                     <div className="absolute top-4 left-4">
-                      <span className="px-4 py-1.5 rounded-full text-sm font-bold bg-blue-900 text-white">
+                      <span className="px-4 py-2 rounded-full text-xs font-bold bg-blue-900 text-white shadow-lg">
                         {project.category}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-blue-900 mb-3 group-hover:text-yellow-600 transition-colors">
+                  {/* Project Content */}
+                  <div className="p-6 space-y-4">
+                    <h3 className="text-xl font-bold text-blue-900 group-hover:text-yellow-600 transition-colors leading-tight">
                       {project.title}
                     </h3>
                     
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    <p className="text-gray-600 leading-relaxed line-clamp-3">
                       {project.description}
                     </p>
 
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center text-sm text-gray-600">
-                        <MapPin className="w-4 h-4 mr-2 text-yellow-500" />
+                    {/* Project Details */}
+                    <div className="space-y-3 pt-2">
+                      <div className="flex items-start gap-2 text-sm text-gray-600">
+                        <MapPin className="w-4 h-4 mt-0.5 text-yellow-500 flex-shrink-0" />
                         <span>{project.location}</span>
                       </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Calendar className="w-4 h-4 mr-2 text-yellow-500" />
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Calendar className="w-4 h-4 text-yellow-500 flex-shrink-0" />
                         <span>{project.year}</span>
                       </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Users className="w-4 h-4 mr-2 text-yellow-500" />
+                      <div className="flex items-start gap-2 text-sm text-gray-600">
+                        <Users className="w-4 h-4 mt-0.5 text-yellow-500 flex-shrink-0" />
                         <span>{project.beneficiaries}</span>
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    {/* Impact Tags */}
+                    <div className="flex flex-wrap gap-2 pt-2">
                       {project.impact.slice(0, 2).map((impact, idx) => (
-                        <span key={idx} className="text-xs bg-blue-50 text-blue-900 px-3 py-1 rounded-full">
+                        <span key={idx} className="text-xs bg-blue-50 text-blue-900 px-3 py-1.5 rounded-full font-medium">
                           {impact}
                         </span>
                       ))}
                     </div>
 
-                    <button className="w-full bg-blue-900 text-white py-3 rounded-lg font-semibold hover:bg-yellow-500 hover:text-gray-900 transition-all flex items-center justify-center space-x-2">
+                    {/* View Details Button */}
+                    <button className="w-full bg-blue-900 text-white py-3 rounded-xl font-semibold hover:bg-yellow-500 hover:text-gray-900 transition-all flex items-center justify-center gap-2 mt-4">
                       <span>View Details</span>
                       <ExternalLink className="w-4 h-4" />
                     </button>
@@ -238,38 +261,43 @@ const Projects = () => {
         </div>
       </section>
 
+      {/* Impact Stats Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-blue-900 mb-4">Our Impact in Numbers</h2>
-            <p className="text-lg text-gray-600">Measurable results across all our initiatives</p>
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="text-center mb-16">
+            <span className="text-yellow-500 font-semibold text-sm uppercase tracking-wider">Our Impact</span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-blue-900 mt-4 mb-4">Measurable Results</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Creating lasting change across all our initiatives
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { number: '50+', label: 'Active Projects' },
               { number: '25', label: 'Countries' },
               { number: '$15M+', label: 'Investment' },
               { number: '5K+', label: 'Beneficiaries' }
             ].map((stat, idx) => (
-              <div key={idx} className="text-center p-8 bg-gray-50 rounded-2xl hover:shadow-lg transition-all">
-                <div className="text-5xl font-bold text-blue-900 mb-2">{stat.number}</div>
-                <p className="text-gray-600 font-medium">{stat.label}</p>
+              <div key={idx} className="text-center p-8 bg-gradient-to-br from-blue-50 to-white rounded-2xl hover:shadow-xl transition-all border border-gray-100">
+                <div className="text-5xl font-bold text-blue-900 mb-3">{stat.number}</div>
+                <p className="text-gray-600 font-medium text-lg">{stat.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-24 bg-blue-900">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+      {/* CTA Section */}
+      <section className="py-20 bg-blue-900">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
             Want to Partner With Us?
           </h2>
-          <p className="text-xl text-white/90 mb-10">
+          <p className="text-xl text-white/90 mb-10 leading-relaxed">
             Join us in creating transformative maritime solutions for West Africa
           </p>
-          <button className="bg-yellow-500 text-gray-900 px-10 py-4 rounded-xl font-bold text-lg hover:bg-yellow-600 transition-all shadow-2xl hover:scale-105 flex items-center justify-center space-x-2 mx-auto">
+          <button className="bg-yellow-500 text-gray-900 px-10 py-4 rounded-xl font-bold text-lg hover:bg-yellow-600 transition-all shadow-2xl hover:scale-105 inline-flex items-center gap-2">
             <span>Start a Project</span>
             <ArrowRight className="w-5 h-5" />
           </button>

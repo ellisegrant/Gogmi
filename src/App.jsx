@@ -11,6 +11,8 @@ import Contact from './Components/Pages/Contact';
 import Blog from './Components/Pages/Blog';
 import Resources from './Components/Pages/Resources';
 import NotFound from './Components/Pages/NotFound';
+import CareersOpportunities from './Components/Pages/CareersOpportunities'
+import Careers from './Components/Pages/CareersOpportunities';
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/CareersOpportunities" element={<Careers />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

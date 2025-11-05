@@ -69,7 +69,7 @@ const Footer = () => {
                 { name: 'Publications', path: '/resources' },
                 { name: 'News & Updates', path: '/blog' },
                 { name: 'Contact', path: '/contact' },
-                { name: 'Careers', path: '/contact' },
+                { name: 'Careers', path: '/CareersOpportunities' },
                 { name: 'Partners', path: '/about' }
               ].map((item) => (
                 <li key={item.path}>
